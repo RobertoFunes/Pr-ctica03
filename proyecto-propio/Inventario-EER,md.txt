@@ -1,0 +1,125 @@
+En la transformación de EER al MR perdimos información del circuito de agregación "TRANSACCIÓN": emisor y receptor, pues estas en realidad son una misma entidad: CUENTA BANCARIA y cuentan exactamente con los mismos atributos y llaves primarias y foráneas.
+
+1.- Entidades fuertes, atributos y claves primarias
+	a) Contribuyente
+		1. Atributos:
+			-RFC---> CLAVE PRIMARIA
+			-Domicilio fiscal 
+			-Actividad económica
+			-Teléfono
+			-E-firma
+
+	b) Lista de bloqueados
+		1. Atributos:
+			-ID de bloqueo----> CLAVE PRIMARIA
+			-Fecha de bloqueo
+			-Motivo
+
+	c) Persona moral
+		1. Atributos:
+			-Fecha de constitución
+			-Razón social
+			-Representante legal
+		2. Clave primaria:
+			-RFC
+
+	d) Persona física
+		1. Atributos: 
+			-Ingresos registrados
+			-Nombre
+			-CURP
+		2. Clave primaria:
+			-RFC
+
+	e) Cuenta bancaria
+		1. Atributos:
+			-Número de cuenta ---> CLAVE PRIMARIA
+			-Saldo
+			-Fecha de apertura
+
+	f) Beneficiario final
+		1. Atributos:
+			-RFC ---> CLAVE PRIMARIA
+
+	g) Bien
+		1. Atributos: 
+			-Tipo de bien
+			-Valor comercial
+			-ID_Bien ---> CLAVE PRIMARIA
+
+	h) Entidad Reportante
+		1. Atributos:
+			-ID de notario ---> CLAVE PRIMARIA
+			-Nombre de institución reportante
+			-Sector económico
+
+	i) Reporte a la UIF
+		1. Atributos:
+			-ID de reporte ---> CLAVE PRIMARIA
+			-Tipo de reporte
+			-Fecha de recepción
+			-Monto total
+
+	j) Alerta
+		1. Atributos:
+			-ID de alerta ---> CLAVE PRIMARIA
+			-Nivel de riesgo
+			-Fecha
+
+2.- Entidades débiles y sus claves de identificación
+	a) Desglose
+		1- Claves de identificación:
+			-Número de renglón ---> CLAVE PRIMARIA
+			-ID de reporte -------> CLAVE FORANEA 
+
+	b) Expediente de investigación
+		1- Claves de identificación:
+			-Número de expediente ---> CLAVE PRIMARIA
+			-ID de alerta -----------> CLAVE FORANEA
+
+3.- Relaciones, con sus cardinalidades mínima y máxima.
+	a) figura en
+		1. Cardinalidad máxima: (1,1)
+		2. Cardinalidad mínima: (0,1)
+
+	b) Posee
+		1. Cardinalidad máxima: (0,N)
+		2. Cardinalidad mínima: (1,1)
+
+	c) Operación vulnerable
+		1. Cardinalidad máxima: (0,N)
+		2. Cardinalidad mínima: (0,N)
+
+	d) Remite
+		1. Cardinalidad máxima: (0,N)
+		2. Cardinalidad mínima: (1,1)
+
+	e) Contiene
+		1. Cardinalidad máxima: (1,N)
+		2. Cardinalidad mínima: (1,1)
+
+	f) Motiva (crea)
+		1. Cardinalidad máxima: (1,1)
+		2. Cardinalidad mínima: (0,1)
+
+	g) Emite sospecha
+		1. Cardinalidad máxima: (0,N)
+		2. Cardinalidad mínima: (1,1)
+
+	h) Transfiere
+		1. Cardinalidad máxima: (0,N)
+		2. Cardinalidad mínima: (0,N)
+
+5.- Atributos multivaluados, compuestos y derivados.
+		1. Compuestos: 
+			Domicilio fiscal: Calle y C.P.
+		2. Multivaluados:
+			Teléfono: un contribuyente puede tener uno o más teléfonos
+		3. Derivados:
+			Monto total e ingresos estimados.
+
+6.- Relaciones ternarias o de orden superior, si su modelo las tiene.
+		1. Relación de orden superior
+			CONTRIBUYENTE ----> SUPERCLASE
+			PERSONA MORAL ----> SUBCLASE  
+			PERSONA FÍSICA ---> SUBCLASE
