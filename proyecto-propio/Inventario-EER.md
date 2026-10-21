@@ -102,7 +102,7 @@ En la transformación de EER al MR perdimos información del circuito de agregac
 		1. Cardinalidad máxima: (1,1)
 		2. Cardinalidad mínima: (0,1)
 
-	g) Emite sospecha
+	g) Crea sospecha
 		1. Cardinalidad máxima: (0,N)
 		2. Cardinalidad mínima: (1,1)
 
