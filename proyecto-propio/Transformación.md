@@ -21,10 +21,9 @@ La relación describe la cantidad de reportes que una sola entidad reportante en
 5. Relación "Crea sospecha":
 La relación explica que las transferencias entre cuentas bancarias generan una alerta con diferentes niveles de riesgo, puede que una transferencia no genere sospechas o puede que genera muchas de ellas por diferentes motivos, mientras que una alerta pertenece exclusivamente a una sola transferencia. por lo tanto es una relación de (1,N) y la clave primaria de TRANSFERENCIA se convierte en clave foránea de ALERTA.
 
-![Tabla de Transacción](../evidencias/Tabla-Transacción.png) 
+![Tabla de Transacción](../evidencias/Tabla-Transaccion.png) 
 
 -ENTIDADES DÉBILES Y JERARQUÍAS-
-
 1. DESGLOSE
 Esta entidad es débil por identificación, pues no tiene atributos suficientes para tener una clave primaria propia y necesita estar obligatoriamente ligada a REPORTE para poder identificarse; se convierte en una tabla con una clave primaria compuesta por la clave foránea más el discriminante. Cuenta con ON DELETE CASCADE para eliminar los registros de las entidades cuando se requiere que eliminemos una entidad y sus atributos no queden huérfano.
 
@@ -36,9 +35,9 @@ La entidad es débil por existencia porque requiere que exista una alerta para q
 ![Entidad débil: Expediente](../evidencias/Tabla-Expediente.png)
 
 3. Superclase CONTRIBUYENTE:
-Elegimos la tercer estrategia para crear convertís esta jerarquía a MR siguiendo la sugerencia de subclases disjuntas y totales, pues un contribuyente solo puede ser una persona moral o física pero no las dos al mismo tiempo o no ser ninguna; de acuerdo con las reglas de transformación, la tabla de la entidad padre desaparece y se crean dos tablas independientes con los atributos de cada subclase. Al hacer esto, desaparece la tabla de CONTRIBUYENTE.
+Elegimos seguir la segunda estrategia después de que haberlo realizado siguiendo la tercera estrategia nos llevará a crear un MR demasiado extenso por dividir CONTRIBUYENTE en PERSONA FÍSICA y PERSONA MORAL, además de simplificar el MR, esta estrategia funciona perfectamente, pues PERSONA FÍSICA y PERSONA MORAL cuentan con pocos atributos propios que las distingan entre sí.  Por lo que obtuvimos tres tablas; CONTRIBUYENTE, PERSONA FÍSICA y PERSONA MORAL.
 
-![Especialización de Superclase CONTRIBUYENTE](../evidencias/Tabla-Persona-Fisica-Moral.png)
+![Especialización de Superclase CONTRIBUYENTE](../evidencias/Tablas-Superclase.png)
 
 
 
