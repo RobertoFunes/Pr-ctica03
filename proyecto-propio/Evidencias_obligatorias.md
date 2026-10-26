@@ -4,7 +4,7 @@ Después de haber terminado el esquema.sql tomamos una captura de pantalla de el
 
 
 
-!\[Prueba de ejecución sin errores](../evidencias/Ejecucion\_sin\_errores.png)
+!\[Prueba de ejecución sin errores](/evidencias/Ejecucion\_sin\_errores.png)
 
 
 
