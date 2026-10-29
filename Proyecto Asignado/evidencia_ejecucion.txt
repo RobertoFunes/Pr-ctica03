@@ -1,0 +1,57 @@
+
+1. CREACIÓN DE LA COPIA DE LA BASE DE DATOS DEL PROYECTO ASIGNADO:
+--------------------------------------------------------------------------------
+Comando ejecutado:
+docker exec seismic-data-visualization-system_db_1 psql -U postgres -c "CREATE DATABASE datawarehouse_copia WITH TEMPLATE datawarehouse;"
+
+Salida:
+CREATE DATABASE
+
+
+2. EJECUCIÓN DEL SCRIPT cambio-usuario.sql:
+--------------------------------------------------------------------------------
+Comando ejecutado:
+docker exec seismic-data-visualization-system_db_1 psql -U postgres -d datawarehouse_copia -f /tmp/cambio-usuario-p3.sql
+
+Salida:
+DROP TABLE
+DROP TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+INSERT 0 1
+INSERT 0 5
+
+
+3. CONSULTA DE DEMOSTRACIÓN (SOLO POSIBLE DESPUÉS DEL CAMBIO):
+--------------------------------------------------------------------------------
+Comando ejecutado:
+docker exec seismic-data-visualization-system_db_1 psql -U postgres -d datawarehouse_copia -c "
+SELECT 
+    c.id_lote AS lote,
+    p.id_prediccion,
+    s.id_sismo,
+    s.magnitud,
+    s.referencia_de_localizacion AS ubicacion,
+    s.nombre_estado AS estado,
+    p.clase_riesgo_predicha AS riesgo,
+    p.score_anomalia,
+    p.probabilidad_confianza AS confianza,
+    p.version_modelo,
+    p.timestamp_prediccion
+FROM predicciones_ia_sismos p
+JOIN dim_sismos s ON p.id_sismo = s.id_sismo
+JOIN control_ingesta_automatica c ON p.id_lote_ingesta = c.id_lote
+WHERE p.es_anomalia = TRUE AND p.clase_riesgo_predicha = 'CRITICO'
+ORDER BY p.score_anomalia DESC;"
+
+Salida obtenida:
+ lote | id_prediccion | id_sismo | magnitud |                  ubicacion                  |  estado  | riesgo  | score_anomalia | confianza |    version_modelo     |  timestamp_prediccion  
+------+---------------+----------+----------+---------------------------------------------+----------+---------+----------------+-----------+-----------------------+------------------------
+    1 |             1 |        0 |      7.4 | 71 km al NOROESTE de AUTLAN DE NAVARRO, JAL | Jalisco  | CRITICO |         0.9425 |     0.975 | seismic-detector-v2.1 | 2026-10-28 12:02:16+00
+    1 |             5 |        4 |        7 | 21 km al OESTE de ZUMPANGO DEL RIO, GRO     | Guerrero | CRITICO |          0.935 |     0.982 | seismic-detector-v2.1 | 2026-10-28 12:02:20+00
+    1 |             4 |        3 |        7 | 83 km al OESTE de AHOME, SIN                | Sinaloa  | CRITICO |          0.912 |      0.96 | seismic-detector-v2.1 | 2026-10-28 12:02:19+00
+(3 rows)
